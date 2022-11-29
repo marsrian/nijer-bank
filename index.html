@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nijer Bank</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="login-area">
+        <div class='submit-area'>
+            <h1 class='bank-title'>Welcome to Munsefer Bank</h1>
+            <h4>Login</h4>
+            <input class='submit-text' type="text" name="name" id="" placeholder='Email'>
+            <br>
+            <input class='submit-password' type="password" name="password" id="" placeholder='Password'>
+            <br>
+            <button class='btn' id='login'>Enter</button>
+        </div>
+    </div>
+    <div id="transaction-area">
+        <div class="transaction-boxes">
+            <div class="box deposit">
+                <h5>Deposit</h5>
+                <h2>$ <span id='currentDeposit'>00</span></h2>
+            </div>
+            <div class="box withdraw">
+                <h5>Withdraw</h5>
+                <h2>$ <span id='currentWithdraw'>00</span></h2>
+            </div>
+            <div class="box balance">
+                <h5>Balance</h5>
+                <h2>$ <span id='currentBalance'>1240</span></h2>
+            </div>
+        </div>
+        <div class='transfer'>
+            <div class="submit-area">
+                <h4>Deposit</h4>
+                <input id='depositAmount' type="text" id="" placeholder='$ amount you want to deposit'>
+                <br>
+                <button id='addDeposit' class='btn'>Deposit</button>
+            </div>
+            <div class="submit-area">
+                <h4>Withdraw</h4>
+                <input id='withdrawAmount' type="text" id="" placeholder='$ amount you want to withdraw'>
+                <br>
+                <button id='addWithdraw' class='btn'>Withdraw</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Login btn event handler
+        const loginBtn = document.getElementById('login');
+        loginBtn.addEventListener("click", function(){
+            const loginArea = document.getElementById('login-area');
+            loginArea.style.display = "none";
+            const transactionArea = document.getElementById('transaction-area');
+            transactionArea.style.display = "block";
+        })
+
+        // deposit btn event handler
+        const depositBtn = document.getElementById('addDeposit');
+        depositBtn.addEventListener('click', function(){
+            const depositNumber = getInputNumber("depositAmount");
+
+            updateSpanText("currentDeposit", depositNumber);
+            updateSpanText("currentBalance", depositNumber);
+
+            document.getElementById('depositAmount').value = "";
+        })
+
+        // withdraw btn event handler
+        const withdrawBtn = document.getElementById("addWithdraw");
+        withdrawBtn.addEventListener('click', function(){
+            const withdrawNumber = getInputNumber("withdrawAmount");
+
+            updateSpanText("currentWithdraw", withdrawNumber);
+            updateSpanText("currentBalance", -1 * withdrawNumber);
+
+            document.getElementById("withdrawAmount").value = "";
+        })
+
+        function getInputNumber(id){
+            const amount = document.getElementById(id).value;
+            const amountNumber = parseFloat(amount);
+            return amountNumber;
+        }
+
+        function updateSpanText(id, addedNumber){
+            const current = document.getElementById(id).innerText;
+            const currentNumber = parseFloat(current);
+            const totalAmount = addedNumber + currentNumber;
+            document.getElementById(id).innerText = totalAmount;
+        }
+    </script>
+</body>
+</html>
